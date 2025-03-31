@@ -1,12 +1,21 @@
-function calculateDays() {
-    const targetDate = new Date(document.getElementById('targetDate').value);
-    const today = new Date();
-    const timeDifference = targetDate - today;
-    const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+function updateCountdown() {
+    const targetDate = new Date("2025-04-15T20:00:00");
+    const now = new Date();
+    const timeDifference = targetDate - now;
 
-    if (isNaN(daysDifference)) {
-        document.getElementById('result').innerText = "Please select a valid date.";
-    } else {
-        document.getElementById('result').innerText = `There are ${daysDifference} day(s) until the selected date.`;
+    if (timeDifference <= 0) {
+        document.getElementById('countdown').innerText = "The countdown has ended!";
+        return;
     }
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    const milliseconds = timeDifference % 1000;
+
+    document.getElementById('countdown').innerText = 
+        `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
 }
+
+setInterval(updateCountdown, 1);
