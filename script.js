@@ -1,4 +1,5 @@
 function updateCountdown() {
+    // Set the target date to the original target date
     const targetDate = new Date("2025-04-15T20:00:00");
     const now = new Date();
     const timeDifference = targetDate - now;
