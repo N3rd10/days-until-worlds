@@ -1,5 +1,5 @@
+// Countdown Timer Logic
 function updateCountdown() {
-    // Set the target date to the original target date
     const targetDate = new Date("2025-04-15T20:00:00");
     const now = new Date();
     const timeDifference = targetDate - now;
@@ -20,4 +20,60 @@ function updateCountdown() {
         `${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
 }
 
+// Start countdown timer
 setInterval(updateCountdown, 1);
+
+// Sprite Animation Logic (Preventing Bottom Stuck Issue)
+document.addEventListener("DOMContentLoaded", () => {
+    const sprite = document.getElementById("sprite");
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    function getRandomYPosition() {
+        return Math.floor(Math.random() * (screenHeight * 0.8)) + "px"; // Avoid bottom boundary
+    }
+
+    function getRandomXPosition() {
+        return Math.floor(Math.random() * (screenWidth * 0.8)) + "px"; // Avoid side boundaries
+    }
+
+    function getRandomDelay() {
+        return Math.floor(Math.random() * (15000 - 5000) + 5000); // Random delay between 5-15 seconds
+    }
+
+    function moveSprite() {
+        const entryDirection = Math.random(); // Randomly selects side, top, or bottom
+
+        if (entryDirection < 0.25) {
+            // Enter from Left
+            sprite.style.top = getRandomYPosition();
+            sprite.style.left = `-100px`;
+            setTimeout(() => sprite.style.left = `200px`, 500);
+            setTimeout(() => sprite.style.left = `-100px`, 1000);
+        } else if (entryDirection < 0.5) {
+            // Enter from Right
+            sprite.style.top = getRandomYPosition();
+            sprite.style.left = `${screenWidth}px`;
+            setTimeout(() => sprite.style.left = `${screenWidth - 200}px`, 500);
+            setTimeout(() => sprite.style.left = `${screenWidth}px`, 1000);
+        } else if (entryDirection < 0.75) {
+            // Enter from Top
+            sprite.style.left = getRandomXPosition();
+            sprite.style.top = `-100px`;
+            setTimeout(() => sprite.style.top = `200px`, 500);
+            setTimeout(() => sprite.style.top = `-100px`, 1000);
+        } else {
+            // Enter from Bottom (Fixed to prevent sticking!)
+            sprite.style.left = getRandomXPosition();
+            sprite.style.top = `${screenHeight}px`; // Start fully off-screen
+            setTimeout(() => sprite.style.top = `${screenHeight - 250}px`, 500); // Moves in slightly
+            setTimeout(() => sprite.style.top = `${screenHeight + 100}px`, 1000); // Moves off-screen to avoid sticking
+        }
+
+        setTimeout(moveSprite, getRandomDelay());
+    }
+
+    sprite.style.left = `-100px`;
+    sprite.style.top = `-100px`;
+    setTimeout(moveSprite, getRandomDelay());
+});
