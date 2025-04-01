@@ -25,13 +25,19 @@ body {
 h1 {
     margin-bottom: 20px;
 }
+
 #countdown {
-    margin-top: 20px;
+    width: 800px; /* Fixed width */
+    height: 100px; /* Fixed height */
     font-size: 5em;
+    text-align: center;
+    overflow: hidden; /* Prevents resizing due to long text */
+    white-space: nowrap; /* Ensures text stays on one line */
 }
+
+/* Large Text (Keeps the larger font size but doesn't affect box size) */
 .large-text {
-    font-size: 8em;
-    color: red;
+    font-size: 8em; /* Increases text size without affecting dimensions */
 }
 
 /* Animated Sprite */
@@ -39,8 +45,7 @@ h1 {
     position: absolute;
     width: 100px;
     height: auto;
-    top: 50vh;
     transform: translateY(-50%);
-    transition: left 0.5s ease-in-out;
+    transition: left 0.8s ease-in-out, top 0.8s ease-in-out;
     z-index: 9999;
 }
